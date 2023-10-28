@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_MD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.;.\..\CMSIS\Core;.\..\CMSIS\STM32F10x;.\..\Lib\inc;.\..\USER\BSP;.\..\USER\APP;.\.cmsis\dsp_lib;.\.cmsis\include;.\RTE\_Target 1;.\.eide\deps</IncludePath>
+              <IncludePath>.;.\..\CMSIS\Core;.\..\CMSIS\STM32F10x;.\..\Lib\inc;.\..\USER\BSP;.\..\USER\APP</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

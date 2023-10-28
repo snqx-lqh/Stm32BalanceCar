@@ -13,6 +13,7 @@
 */
 
 void bsp_usart1_init(u32 bound);
+void bsp_usart3_init(u32 bound);
 
 //DEBUG串口接收中断函数，中断中已经清除标志位
 void DebugUsartMain(void);

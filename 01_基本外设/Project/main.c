@@ -42,6 +42,7 @@ int main()
 {
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	bsp_usart1_init(115200);
+	bsp_usart3_init(115200);
 	delay_init();
 	bsp_led_init();
 	bsp_exti_init();

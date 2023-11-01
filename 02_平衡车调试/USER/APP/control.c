@@ -13,15 +13,15 @@ int16_t leftPwm=0,rightPwm=0;
 float   angleAim=1;
 int16_t anglePwm=0;
 int16_t gyroBalance = 0;
-float   angleKp = 720;//490
-float   angleKd = 1.7;//14
+float   angleKp = 600;//490
+float   angleKd = 1.2;//14
 
 int16_t leftEncode=0,rightEncode=0;
 int16_t speedAim = 0;
 int16_t speedNow = 0;
 int16_t speedPwm = 0;
-float   speedKp = -140;//80
-float   speedKi = -0.7;//0.4
+float   speedKp = -60;//80
+float   speedKi = -0.3;//0.4
 
 int16_t turnPwm = 0;
 float   turnKp = 0;

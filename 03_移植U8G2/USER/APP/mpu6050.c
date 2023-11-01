@@ -360,14 +360,14 @@ short MPU_Get_Temperature(void)
 //gx,gy,gz:陀螺仪x,y,z轴的原始读数(带符号)
 //返回值:0,成功
 //    其他,错误代码
-u8 MPU_Get_Gyro(short *gy,short *gx,short *gz)
+u8 MPU_Get_Gyro(short *gx,short *gy,short *gz)
 {
     u8 buf[6],res;
     res=MPU_Read_Len(MPU6050_ADDR,MPU_GYRO_XOUTH_REG,6,buf);
     if(res==0)
     {
-        *gy=(((u16)buf[0]<<8)|buf[1]);
-        *gx=(((u16)buf[2]<<8)|buf[3]);
+        *gx=(((u16)buf[0]<<8)|buf[1]);
+        *gy=(((u16)buf[2]<<8)|buf[3]);
         *gz=(((u16)buf[4]<<8)|buf[5]);
     }
     return res;
@@ -377,14 +377,14 @@ u8 MPU_Get_Gyro(short *gy,short *gx,short *gz)
 //gx,gy,gz:陀螺仪x,y,z轴的原始读数(带符号)
 //返回值:0,成功
 //    其他,错误代码
-u8 MPU_Get_Acc(short *ay,short *ax,short *az)
+u8 MPU_Get_Acc(short *ax,short *ay,short *az)
 {
     u8 buf[6],res;
     res=MPU_Read_Len(MPU6050_ADDR,MPU_ACCEL_XOUTH_REG,6,buf);
     if(res==0)
     {
-        *ay=(((u16)buf[0]<<8)|buf[1]);
-        *ax=(((u16)buf[2]<<8)|buf[3]);
+        *ax=(((u16)buf[0]<<8)|buf[1]);
+        *ay=(((u16)buf[2]<<8)|buf[3]);
         *az=(((u16)buf[4]<<8)|buf[5]);
     }
     return res;

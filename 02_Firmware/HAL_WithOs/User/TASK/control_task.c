@@ -9,6 +9,7 @@
 static void angle_control(balance_car_t *balance_car);
 static void speed_control(balance_car_t *balance_car);
 static void turn_control(balance_car_t *balance_car);
+static void set_dead_time_pwm(balance_car_t *balance_car);
 
 balance_car_t balance_car;
 
@@ -23,12 +24,14 @@ void control_task(void const * argument)
     INS_task_local_handler = xTaskGetHandle(pcTaskGetName(NULL));
 	
 	//初始化一些变量
-	balance_car.angleAim = -2;
-	balance_car.angleKp  = -260;
-	balance_car.angleKd  = -1.2;
+	balance_car.angleAim = -5;
+	balance_car.angleKp  = -180;
+	balance_car.angleKd  = -0.5;
 	balance_car.speedAim = 0;
-	balance_car.speedKp  = -140;
-	balance_car.speedKi  = -0.7;
+	balance_car.speedKp  = -70;  //-140
+	balance_car.speedKi  = -0.35;//-0.7
+//	balance_car.speedKp  = 0.55;
+//	balance_car.speedKi  = 0.004;
 	balance_car.turnAim = 0;
 	balance_car.turnKp  = 0;
 	balance_car.turnKd  = 0;
@@ -56,8 +59,12 @@ void control_task(void const * argument)
 		speed_control(&balance_car);
 		turn_control(&balance_car);
 		//左右电机赋值
-		balance_car.leftPwm  = balance_car.anglePwm + balance_car.speedPwm + balance_car.turnPwm;
-		balance_car.rightPwm = balance_car.anglePwm + balance_car.speedPwm - balance_car.turnPwm;
+		balance_car.leftPwm  = balance_car.anglePwm  + balance_car.speedPwm + balance_car.turnPwm;
+		balance_car.rightPwm = balance_car.anglePwm  + balance_car.speedPwm - balance_car.turnPwm;
+//		balance_car.leftPwm  = balance_car.anglePwm    + balance_car.turnPwm;
+//		balance_car.rightPwm = balance_car.anglePwm    - balance_car.turnPwm;
+		//添加死区控制
+		set_dead_time_pwm(&balance_car);
 		//设置实际的值
 		motor_set_pwm(balance_car.leftPwm,balance_car.rightPwm);
 	}
@@ -82,6 +89,23 @@ void set_car_speed(int16_t speed)
 {
 	balance_car.speedAim = speed;
 }
+/**
+  * @brief   给一个死区控制
+  * @param   balance_car 平衡车控制结构体 
+  * @retval  void
+ **/
+static void set_dead_time_pwm(balance_car_t *balance_car)
+{
+	if(balance_car == NULL)
+	{
+		return;
+	}
+	if(balance_car->leftPwm > 0) balance_car->leftPwm += 300;
+	else balance_car->leftPwm -= 300;
+	
+	if(balance_car->rightPwm > 0) balance_car->rightPwm += 300;
+	else balance_car->rightPwm -= 300;
+}
 
 /**
   * @brief   角度控制相关，最后会计算出角度环需要的PWM
@@ -96,6 +120,8 @@ static void angle_control(balance_car_t *balance_car)
 	{
 		return;
 	}
+	 
+	//angleBias = balance_car->speedPwm + balance_car->angleAim - balance_car->car_angle;
 	angleBias = balance_car->angleAim - balance_car->car_angle;
 	anglePOut = angleBias   * balance_car->angleKp;
 	angleDOut = balance_car->gyroBalance * balance_car->angleKd;

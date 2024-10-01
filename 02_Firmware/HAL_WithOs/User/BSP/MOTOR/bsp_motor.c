@@ -1,7 +1,7 @@
 #include "bsp_motor.h"
 #include "tim.h"
 
-#define MAX_PWM 6900
+#define MAX_PWM   6900
 
 #define AIN_HIGH()  HAL_GPIO_WritePin(AIN_GPIO_Port,AIN_Pin,GPIO_PIN_SET );
 #define AIN_LOW()   HAL_GPIO_WritePin(AIN_GPIO_Port,AIN_Pin,GPIO_PIN_RESET );

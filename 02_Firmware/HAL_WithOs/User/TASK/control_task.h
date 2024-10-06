@@ -38,6 +38,9 @@ typedef struct{
 	//pwm输出
 	int16_t leftPwm  ;
 	int16_t rightPwm ;
+	
+	//控制模式
+	uint8_t control_mode;
 }balance_car_t;
 
 void control_task(void const * argument);

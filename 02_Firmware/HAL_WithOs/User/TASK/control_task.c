@@ -5,6 +5,7 @@
 #include "mpu6050.h"
 #include "filter.h"
 #include "bsp_motor.h"
+#include "bsp_key.h" 
 
 static void angle_control(balance_car_t *balance_car);
 static void speed_control(balance_car_t *balance_car);
@@ -24,17 +25,25 @@ void control_task(void const * argument)
     INS_task_local_handler = xTaskGetHandle(pcTaskGetName(NULL));
 	
 	//初始化一些变量
-	balance_car.angleAim = -5;
-	balance_car.angleKp  = -180;
-	balance_car.angleKd  = -0.5;
+	balance_car.control_mode = 1; //模式为0是并级  1是串级
+	balance_car.angleAim = -6.2;
+	balance_car.angleKp  = -350 ;//-300
+	balance_car.angleKd  = -1 ;//-0.5
+	balance_car.angleKp  *= 0.6; 
+	balance_car.angleKd  *= 0.6; 
 	balance_car.speedAim = 0;
-	balance_car.speedKp  = -70;  //-140
-	balance_car.speedKi  = -0.35;//-0.7
-//	balance_car.speedKp  = 0.55;
-//	balance_car.speedKi  = 0.004;
+	if(0 == balance_car.control_mode)//模式为0是并级
+	{
+		balance_car.speedKp  = -70;  //-140  -70
+		balance_car.speedKi  = balance_car.speedKp/200;//-0.7  -0.35
+	}else if(1 == balance_car.control_mode)//模式为1是串级
+	{
+		balance_car.speedKp  = 0.32;
+		balance_car.speedKi  = balance_car.speedKp/200;	
+	}
 	balance_car.turnAim = 0;
 	balance_car.turnKp  = 0;
-	balance_car.turnKd  = 0;
+	balance_car.turnKd  = 0.1;
 	
 	mpu6050_init();
 	motor_init();
@@ -59,12 +68,22 @@ void control_task(void const * argument)
 		speed_control(&balance_car);
 		turn_control(&balance_car);
 		//左右电机赋值
-		balance_car.leftPwm  = balance_car.anglePwm  + balance_car.speedPwm + balance_car.turnPwm;
-		balance_car.rightPwm = balance_car.anglePwm  + balance_car.speedPwm - balance_car.turnPwm;
-//		balance_car.leftPwm  = balance_car.anglePwm    + balance_car.turnPwm;
-//		balance_car.rightPwm = balance_car.anglePwm    - balance_car.turnPwm;
+		if(0 == balance_car.control_mode)//模式为0是并级
+		{
+			balance_car.leftPwm  = balance_car.anglePwm  + balance_car.speedPwm + balance_car.turnPwm;
+			balance_car.rightPwm = balance_car.anglePwm  + balance_car.speedPwm - balance_car.turnPwm;
+		}else if(1 == balance_car.control_mode)//模式为1是串级
+		{
+			balance_car.leftPwm  = balance_car.anglePwm    + balance_car.turnPwm;
+			balance_car.rightPwm = balance_car.anglePwm    - balance_car.turnPwm;
+		}		
 		//添加死区控制
 		set_dead_time_pwm(&balance_car);
+		if(balance_car.car_angle > 40 || balance_car.car_angle < -40)
+		{
+			balance_car.leftPwm  = 0;
+			balance_car.rightPwm = 0;
+		}
 		//设置实际的值
 		motor_set_pwm(balance_car.leftPwm,balance_car.rightPwm);
 	}
@@ -100,6 +119,7 @@ static void set_dead_time_pwm(balance_car_t *balance_car)
 	{
 		return;
 	}
+	
 	if(balance_car->leftPwm > 0) balance_car->leftPwm += 300;
 	else balance_car->leftPwm -= 300;
 	
@@ -120,9 +140,13 @@ static void angle_control(balance_car_t *balance_car)
 	{
 		return;
 	}
-	 
-	//angleBias = balance_car->speedPwm + balance_car->angleAim - balance_car->car_angle;
-	angleBias = balance_car->angleAim - balance_car->car_angle;
+	if(0 == balance_car->control_mode)//模式为0是并级
+	{
+		angleBias = balance_car->angleAim - balance_car->car_angle;
+	}else if(1 == balance_car->control_mode)//模式为1是串级
+	{
+		angleBias = balance_car->speedPwm + balance_car->angleAim - balance_car->car_angle;
+	}	 
 	anglePOut = angleBias   * balance_car->angleKp;
 	angleDOut = balance_car->gyroBalance * balance_car->angleKd;
 	
@@ -175,7 +199,7 @@ static void turn_control(balance_car_t *balance_car)
 		return;
 	}
 	turnPOut = balance_car->turnAim * balance_car->turnKp;
-	turnDOut = 0;
+	turnDOut = balance_car->gyro[2] * balance_car->turnKd;
 	balance_car->turnPwm = turnPOut + turnDOut;
 }
 /**

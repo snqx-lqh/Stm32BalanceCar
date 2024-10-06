@@ -72,7 +72,4 @@ bool ESP8266_UnvarnishSend ( void );
 void ESP8266_ExitUnvarnishSend ( void );
 u8 ESP8266_Get_LinkStatus ( void );
  
-
- 
-
 #endif

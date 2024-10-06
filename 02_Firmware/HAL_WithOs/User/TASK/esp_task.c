@@ -26,14 +26,14 @@ void esp_task(void const * argument)
 	
 	while(1)
 	{
-		keyValue = KeyScan(SINGLE_SCAN);
-		if(KEY1_VALUE == keyValue){
-			 ESP8266_Send_Str("hello 1",0,sizeof("hello 1"));
-		}else if(KEY2_VALUE == keyValue){
-			 ESP8266_Send_Str("hello 2",0,sizeof("hello 2"));
-		}else{
+//		keyValue = KeyScan(SINGLE_SCAN);
+//		if(KEY1_VALUE == keyValue){
+//			 ESP8266_Send_Str("hello 1",0,sizeof("hello 1"));
+//		}else if(KEY2_VALUE == keyValue){
+//			 ESP8266_Send_Str("hello 2",0,sizeof("hello 2"));
+//		}else{
 
-		}
+//		}
 		 
 		if(esp_receive_flag == 1)
 		{

@@ -2,6 +2,8 @@
 
 项目是基于STM32F103C8T6的平衡车设计，使用的是STM32CubeMx生成的HAL库相关和FreeRTOS相关，主要是为了学习FreeRTOS相关。
 
+硬件开源地址：https://oshwhub.com/from_zero/ping-heng-xiao-che
+
 ## 实物展示
 
 ![](04_Images/c2e7424cd24e928445c73c12207e272c.jpg)

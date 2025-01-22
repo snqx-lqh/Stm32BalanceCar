@@ -1,10 +1,18 @@
+## 2024/12/20更
+
+今天突然发现这个板子也适配我以前的一个比较大的底板
+
+<img src="04_Images/2edf2977fdad3fa6b4702bcd0444aa1a.jpg" alt="img" style="zoom: 25%;" />
+
+
+
 ## 项目介绍
 
 项目是基于STM32F103C8T6的平衡车设计，使用的是STM32CubeMx生成的HAL库相关和FreeRTOS相关，主要是为了学习FreeRTOS相关。
 
 ## 实物展示
 
-![](04_Images/c2e7424cd24e928445c73c12207e272c.jpg)
+<img src="04_Images/c2e7424cd24e928445c73c12207e272c.jpg" style="zoom: 25%;" />
 
 ## 硬件设计
 

@@ -47,6 +47,7 @@ void u_i2c1_write_byte(unsigned char add,unsigned char reg,unsigned char *data);
 void u_i2c1_write_bytes(unsigned char add,unsigned char reg,unsigned char *data,unsigned char len);
 void u_i2c1_read_byte(unsigned char add,unsigned char reg,unsigned char *data);
 void u_i2c1_read_bytes(unsigned char add,unsigned char reg,unsigned char *data,unsigned char len);
+void u_i2c_master_transmit_bytes(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

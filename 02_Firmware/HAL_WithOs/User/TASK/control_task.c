@@ -26,7 +26,7 @@ void control_task(void const * argument)
 	
 	//初始化一些变量
 	balance_car.control_mode = 1; //模式为0是并级  1是串级
-	balance_car.angleAim = -6.2;
+	balance_car.angleAim = -0;
 	balance_car.angleKp  = -350 ;//-300
 	balance_car.angleKd  = -1 ;//-0.5
 	balance_car.angleKp  *= 0.6; 

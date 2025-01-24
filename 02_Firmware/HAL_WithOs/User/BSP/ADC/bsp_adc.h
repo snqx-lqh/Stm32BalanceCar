@@ -5,4 +5,5 @@
 
 void adc_convert();
 float get_power_value(void);
+
 #endif

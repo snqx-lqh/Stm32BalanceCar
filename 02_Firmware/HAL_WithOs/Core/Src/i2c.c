@@ -169,6 +169,22 @@ void u_i2c1_read_bytes(unsigned char add,unsigned char reg,unsigned char *data,u
 		HAL_I2C_Mem_Read(&hi2c1, (add<<1), reg,I2C_MEMADD_SIZE_8BIT, data, len, HAL_MAX_DELAY);  
 	}
 }
+
+void u_i2c_master_transmit_bytes(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout)
+{	
+	if(xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
+	{
+		// 等待互斥量，确保在写入共享数据时不会被其他任务中断
+		if (xSemaphoreTake(MutexSemaphore, portMAX_DELAY) == pdTRUE) {
+			HAL_I2C_Master_Transmit(hi2c,DevAddress,pData,Size,Timeout);
+			// 释放互斥量
+			xSemaphoreGive(MutexSemaphore);
+		}
+	}else{
+		HAL_I2C_Master_Transmit(hi2c,DevAddress,pData,Size,Timeout);
+	}
+}
+
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

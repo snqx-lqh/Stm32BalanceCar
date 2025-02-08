@@ -1,0 +1,4 @@
+Flutter Code                     这个文件夹里面放着APP的Flutter源代码
+HAL_WithOs                    这个是整体的平衡小车控制代码
+HAL_WithOs_NoU8G2    这个是没有U8G2图形库的代码，方便调试
+u8g2-windows-sdl-simulate 这个是U8G2在线仿真文件，该部分配置查看视频：https://www.bilibili.com/video/BV1vWfJYNEDb/?vd_source=fcf02d9420f87f9d13e80731eaba983f

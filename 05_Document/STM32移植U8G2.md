@@ -359,9 +359,9 @@ make
 ```makefile
 # 编译器
 CC = gcc
-# 编译选项 记得更换自己的SDL2路径，就在你的mingw64路径下
+# 编译选项              记得更换自己的SDL2路径，就在你的mingw64路径下  ！！！！！！！！！！
 CFLAGS = -Wall -Wextra -O2 -Icsrc -IE:/Program/mingw64/x86_64-w64-mingw32/include/SDL2
-# 链接选项
+# 链接选项              记得更换自己的路径，就在你的mingw64路径下      ！！！！！！！！！！
 LDFLAGS = -LE:/Program/mingw64/x86_64-w64-mingw32/lib -lSDL2
 # 目标可执行文件
 TARGET = main.exe
@@ -388,7 +388,7 @@ clean:
 .PHONY: all clean
 ```
 
-并编写一个测试文件main.c。
+并编写一个测试文件main.c。**注意**，测试代码必须要有按键相关的处理，不然会卡死。
 
 ```c
 #include "csrc/u8g2.h"

@@ -55,7 +55,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 			count_cnt_sum=period_cnt*65535+(ccr_cnt+1); 	 
 			end_flag=0;		
 		}
- 
+
 	}
 } 
 

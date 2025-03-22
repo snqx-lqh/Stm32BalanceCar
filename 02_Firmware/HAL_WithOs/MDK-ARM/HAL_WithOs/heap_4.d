@@ -1,0 +1,13 @@
+.\hal_withos\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
+.\hal_withos\heap_4.o: E:\Program\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\hal_withos\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+.\hal_withos\heap_4.o: E:\Program\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\hal_withos\heap_4.o: E:\Program\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\hal_withos\heap_4.o: ../Core/Inc/FreeRTOSConfig.h
+.\hal_withos\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+.\hal_withos\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+.\hal_withos\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+.\hal_withos\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+.\hal_withos\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+.\hal_withos\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+.\hal_withos\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h

@@ -1,3 +1,20 @@
+## 2025/7/1更
+`control_task.c`里面的以下处理有点问题。导致代码必须插上NRF才能正常工作，不然你把这里注释，自己写逻辑也可以。其实是`NRF_TASK`那里初始化的问题，先记录这个问题，大家查看的时候注意，后面有机会改，但是我感觉我可能难的改了。
+
+```c
+  //当4个数据不同时为2048时，认为有数据来
+  if(balance_car.rc_data->lx_value != 2048 && 
+     balance_car.rc_data->ly_value != 2048 &&
+     balance_car.rc_data->rx_value != 2048 &&
+     balance_car.rc_data->ry_value != 2048)
+  {
+    rc_lx_value = (int16_t)((balance_car.rc_data->lx_value - 2048)/64.0f);
+    rc_ry_value = (int16_t)((balance_car.rc_data->ry_value - 2048)/64.0f);
+    balance_car.speedAim = rc_lx_value;
+    balance_car.turnAim  = rc_ry_value;
+  }
+```
+
 ## 2024/12/20更
 
 今天突然发现这个板子也适配我以前的一个比较大的底板
